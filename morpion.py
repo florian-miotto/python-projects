@@ -89,7 +89,9 @@ def choix():
 def affichage_scores():
     fichier = open("scores.txt", "r")
     scores = fichier.read()
+    print("\___High Score________/")
     print(scores)
+    print("_______________________")
     fichier.close()
     choix()
 #le joueur inscrit son username
@@ -124,19 +126,22 @@ def ajout(username):
     fichier.write(username + " 1")
     fichier.close()
     
-#incrémentation du nombre de victoires
 def incrementation(username):
     fichier = open("scores.txt", "r")
     scores = fichier.read()
     fichier.close()
-    scores = scores.split()
+    scores = scores.split("\n")
     for i in range(len(scores)):
-        if scores[i] == username:
-            scores[i+1] = str(int(scores[i+1]) + 1)
+        if scores[i].startswith(username):
+            name, score = scores[i].split()
+            score = str(int(score) + 1)
+            scores[i] = name + " " + score
+
     fichier = open("scores.txt", "w")
     for i in range(len(scores)):
-        fichier.write(scores[i] + " ")
+        fichier.write(scores[i] + "\n")
     fichier.close()
+
 #affichage du gagnant
 def affichage_gagnant(username):
     print("Le gagnant est " + username)
